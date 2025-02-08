@@ -1,0 +1,22 @@
+{
+  "dashboard": {
+    "title": "Observability Stack",
+    "panels": [
+      {
+        "title": "CPU Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "process_cpu_seconds_total",
+            "legendFormat": "{{instance}}"
+          }
+        ]
+      },
+      {
+        "title": "Logs - Loki",
+        "type": "logs",
+        "targets": [{ "expr": "{job='varlogs'}" }]
+      }
+    ]
+  }
+}

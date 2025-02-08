@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "application"
+    static_configs:
+      - targets: ["<APP_IP>:8000"] #Substitua <APP_IP> pelo IP ou hostname da aplicação.
+
+  - job_name: "otel-collector"
+    static_configs:
+      - targets: ["otel-collector:4317"]
