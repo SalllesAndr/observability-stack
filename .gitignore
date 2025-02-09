@@ -1,1 +1,79 @@
+# 🌟 Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# 🌟 Arquivos de credenciais e chaves privadas (NUNCA COMITAR ISSO!)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.crt
+*.pfx
+*.enc
+secrets.yaml
+secrets.json
+
+# 🌟 Diretórios de dependências do Node.js (se houver)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# 🌟 Logs
+logs/
+*.log
+*.log.*
+log/
+nginx/logs/
+grafana/logs/
+prometheus/logs/
+loki/logs/
+otel-collector/logs/
+
+# 🌟 Diretórios e arquivos temporários do sistema
+tmp/
+temp/
+.cache/
+.vscode/
+.idea/
+
+# 🌟 Arquivos do Docker
+docker-compose.override.yml
+docker-compose.override.yaml
+*.pid
+*.sock
+*.swp
+
+# 🔥 Arquivos temporários do sistema
+*.log
+*.tmp
+*.bak
+
+# 🔥 Arquivos de cache do Docker
+docker/cache/
+
+
+# 🌟 Diretórios e arquivos do Terraform
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
 .terraform/
+.terraform.lock.hcl
+
+# 🌟 Chaves SSH (se houver)
+id_rsa
+id_rsa.pub
+.ssh/
+
+# 🌟 Diretórios do Portainer e containers
+portainer_data/
+data/
+volumes/
+grafana/data/
+prometheus/data/
+loki/data/
+
+# 🌟 Arquivos de build e cache
+dist/
+build/
+
