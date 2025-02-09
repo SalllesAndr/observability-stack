@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   # 🔹 Serviço do Prometheus (Coletor de Métricas)
   prometheus:
@@ -24,7 +22,9 @@ services:
       - "3100:3100"
     volumes:
       - ./loki/config/loki-config.yaml:/etc/loki/local-config.yaml
-    command: -config.file=/etc/loki/local-config.yaml
+      - ./loki-data:/var/lib/loki # Garante persistência dos logs
+      - ./loki-data/wal:/wal
+    user: "10001:10001" # Loki precisa rodar como esse usuário
     networks:
       - observability
 
@@ -79,11 +79,11 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Sao_Paulo
-      - URL=meudominio.com.br # Substitua pelo domínio real
+      - URL=sallesarchcloud.com.br # Substitua pelo domínio real
       - SUBDOMAINS=wildcard
       - VALIDATION=dns
       - DNSPLUGIN=cloudflare
-      - EMAIL=email@meudominio.com.br # Substitua pelo seu e-mail real
+      - EMAIL=email@sallesarchcloud.com.brbr # Substitua pelo seu e-mail real
       - DHLEVEL=4096
     volumes:
       - ./letsencrypt:/config
