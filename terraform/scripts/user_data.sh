@@ -1,30 +1,49 @@
 #!/bin/bash
-set -e  # Para parar a execução em caso de erro
+set -e  # Encerra o script em caso de erro
 
-# Atualizar pacotes e instalar dependências
+# Atualiza pacotes e instala dependências
 sudo apt update -y
-sudo apt install -y docker.io docker-compose unzip nginx git
+sudo apt install -y ca-certificates curl gnupg lsb-release
 
-# Iniciar e habilitar Docker e Nginx
-sudo systemctl start docker
+# Cria diretório para chaves GPG
+sudo install -m 0755 -d /etc/apt/keyrings
+
+# Adiciona a chave oficial do Docker
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Adiciona o repositório do Docker
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Atualiza o apt para reconhecer o novo repositório
+sudo apt update -y
+
+# Instala Docker, Docker Compose e ferramentas adicionais
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin git vim nano
+
+# Habilita e inicia o Docker
 sudo systemctl enable docker
-sudo systemctl start nginx
-sudo systemctl enable nginx
+sudo systemctl start docker
 
-# Clonar o repositório do GitHub
-cd /home/ubuntu
-git clone https://github.com/seu-usuario/observability-stack.git
-cd observability-stack
+# Adiciona o usuário ubuntu ao grupo Docker para evitar problemas de permissão
+sudo usermod -aG docker ubuntu
 
-# Copiar configurações do Nginx para os diretórios corretos
-sudo cp stack-observability/nginx/nginx.conf /etc/nginx/nginx.conf
-sudo cp stack-observability/nginx/conf.d/sites-available/* /etc/nginx/sites-available/
-sudo ln -s /etc/nginx/sites-available/grafana.conf /etc/nginx/sites-enabled/
-sudo ln -s /etc/nginx/sites-available/prometheus.conf /etc/nginx/sites-enabled/
+# Executa como root
+sudo -i <<EOF
 
-# Testar e reiniciar o Nginx para aplicar as mudanças
-sudo nginx -t && sudo systemctl restart nginx
+# Define o diretório onde o repositório será clonado
+PROJECT_DIR="/home/ubuntu/observability-stack"
 
-# Subir os serviços via Docker Compose
-cd /home/ubuntu/observability-stack/stack-observability
-docker-compose up -d
+# Clona o repositório na EC2
+cd /home/ubuntu/
+git clone https://github.com/SalllesAndr/observability-stack.git
+
+# Define permissões corretas para evitar problemas de acesso
+chown -R ubuntu:ubuntu $PROJECT_DIR
+
+EOF
+
+sudo systemctl restart docker

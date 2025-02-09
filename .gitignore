@@ -77,3 +77,20 @@ loki/data/
 dist/
 build/
 
+# Ignorar arquivos e diretórios específicos do Portainer
+portainer/config/
+
+# Ignorar arquivos e diretórios específicos do Let's Encrypt
+letsencrypt/
+
+# Ignorar dados persistentes
+loki-data/
+prometheus/data/
+grafana/data/
+
+# Ignorar logs
+*.log
+
+# Ignorar configurações locais
+*.db
+*.env

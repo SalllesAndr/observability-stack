@@ -9,14 +9,14 @@ exporters:
     endpoint: "0.0.0.0:9464"
   loki:
     endpoint: "http://loki:3100/loki/api/v1/push"
-  logging:
+  debug:
     verbosity: detailed
 
 service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [logging]
+      exporters: [debug] # Alterado de "logging" para "debug"
     metrics:
       receivers: [otlp]
       exporters: [prometheus]
