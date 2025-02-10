@@ -8,15 +8,10 @@ exporters:
   prometheus:
     endpoint: "0.0.0.0:9464"
   loki:
-    endpoint: "http://loki:3100/loki/api/v1/push"
-  debug:
-    verbosity: detailed
+    endpoint: "http://loki.sallesarchcloud.com.br:3100/loki/api/v1/push"
 
 service:
   pipelines:
-    traces:
-      receivers: [otlp]
-      exporters: [debug] # Alterado de "logging" para "debug"
     metrics:
       receivers: [otlp]
       exporters: [prometheus]
