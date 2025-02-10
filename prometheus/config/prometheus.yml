@@ -1,11 +1,12 @@
 global:
   scrape_interval: 15s
+  scrape_timeout: 10s # Ajuste o tempo de timeout se necessário
 
 scrape_configs:
   - job_name: "prometheus"
     static_configs:
-      - targets: ["prometheus.sallesarchcloud.com.br:9090"]
+      - targets: ["localhost:9090"]
 
   - job_name: "otel-collector"
     static_configs:
-      - targets: ["otel-collector.sallesarchcloud.com.br:4317"]
+      - targets: ["localhost:4317"]
