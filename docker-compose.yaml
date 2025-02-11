@@ -76,11 +76,11 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Sao_Paulo
-      - URL=localhost # Mudado para localhost
+      - URL=localhost # Mudado para localhost ou seu domínio em caso de https e http
       - SUBDOMAINS=wildcard
       - VALIDATION=dns
       - DNSPLUGIN=cloudflare
-      - EMAIL=email@sallesarchcloud.com.br
+      - EMAIL=email@seudomínio.com.br
       - DHLEVEL=4096
     volumes:
       - ./letsencrypt:/config
